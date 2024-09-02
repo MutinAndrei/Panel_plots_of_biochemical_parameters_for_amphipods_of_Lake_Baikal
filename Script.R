@@ -102,6 +102,7 @@ FlavusATP[,3] <- factor(FlavusATP[,3], levels=unique(FlavusATP[,3]))
 FlavusATPcoluor <- c("darkorange", "darkorange", "darkorange", "gray40", "darkorange", "darkorange",
                      "darkorange", "darkorange", "darkorange", "darkorange", "darkorange", "darkorange",
                      "darkorange")
+scaleFUN <- function(x) sprintf("%.1f", x)
 p1 <- ggplot(FlavusATP, 
        aes(x = Temperature, y = Value, ymin = 0)) +
   geom_boxplot(outlier.alpha = 0, alpha = 0.5, fill = FlavusATPcoluor, width = 0.6) +  
@@ -122,29 +123,30 @@ p1 <- ggplot(FlavusATP,
   theme(plot.title = element_text(hjust = 0.5)) + 
   ylim(0, 3.5) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = 3.05, yend = 3.05, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("segment", x = 3, xend = 1, y = 3.05, yend = 3.05, colour = "dodgerblue2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(2), y = c(3.42), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(2), y = c(3.23), label = "decrease", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(3.42), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(3.23), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(2.85), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = 2.85, yend = 2.85, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("segment", x = 3, xend = 1, y = 2.85, yend = 2.85, colour = "dodgerblue2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(2), y = c(3.42), label = "Temperature", cex=6, col = "black") +
+  annotate("text", x = c(2), y = c(3.13), label = "decrease", cex=6, col = "black") +
+  annotate("text", x = c(6), y = c(3.42), label = "Temperature", cex=6, col = "black") +
+  annotate("text", x = c(6), y = c(3.13), label = "increase", cex=6, col = "black") +
+  annotate("text", x = c(4), y = c(2.85), label = "Control", cex=4, col = "black") + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
-  theme(text=element_text(size=12, family="Arial")) + 
-  theme(legend.position = c(0.86, 1.0515),
+  theme(text=element_text(size=25, family="Arial")) + 
+  theme(legend.position = c(0.8, 1.0515),
         legend.direction = "horizontal") +
-  theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
+  theme(plot.title = element_text(hjust = 0.01),
+        axis.title.y = element_text(vjust = +1.7)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
-    axis.line = element_line(linewidth = 0.4, color="black"))
+    axis.line = element_line(linewidth = 0.4, color="black")) + scale_y_continuous(labels=scaleFUN)
 #save plot ATP
 ggsave("2023-12-20_АТФ flavus.png", width = 20, height = 11, units = "cm", dpi = 600)
-
 
 #plot for ADP O. albinus
 AlbinusATP[,3] <- factor(AlbinusATP[,3], levels=unique(AlbinusATP[,3]))
 AlbinusATPcoluor <- c("gray40", "floralwhite", "floralwhite",
                       "floralwhite", "floralwhite", "floralwhite", "floralwhite", "floralwhite", "floralwhite",
                       "floralwhite")
+p1
 
 p2 <- ggplot(AlbinusATP, 
        aes(x = factor(Temperature), y = Value, ymin = 0)) +
@@ -155,7 +157,7 @@ p2 <- ggplot(AlbinusATP,
        col = "Depth, m:",
        shape = "Depth, m:",
        x = "Temperature, °C",
-       y = "ATP, µM/g wet weight",
+       y = NULL,
   ) +
   theme(title  = ggtext::element_markdown()) +
   scale_color_manual(values = c("cornflowerblue")) +
@@ -166,19 +168,20 @@ p2 <- ggplot(AlbinusATP,
   theme(plot.title = element_text(hjust = 0.5)) + 
   ylim(0, 3.5) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = 3.05, yend = 3.05, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(6), y = c(3.42), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(3.23), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(2.85), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = 2.85, yend = 2.85, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(6), y = c(3.42), label = "Temperature", cex=6, col = "black") +
+  annotate("text", x = c(6), y = c(3.13), label = "increase", cex=6, col = "black") +
+  annotate("text", x = c(4), y = c(2.85), label = "Control", cex=4, col = "black") + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
-  theme(text=element_text(size=12, family="Arial")) + 
-  theme(legend.position = c(0.9, 1.0515),
+  theme(text=element_text(size=25, family="Arial")) + 
+  theme(legend.position = c(0.86, 1.0515),
         legend.direction = "horizontal", 
         legend.spacing.y = unit(1.0, 'cm')) +
   theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
     axis.line = element_line(linewidth = 0.4, color="black")) +
-    scale_x_discrete(limits = c('0.5', '1', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22'))
+    scale_x_discrete(limits = c('0.5', '1', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22')) + 
+  scale_y_continuous(labels=scaleFUN)
 ggsave("2023-12-20_АТФ albinus.png", width = 20, height = 11, units = "cm", dpi = 600) 
 
 p1/p2
@@ -203,25 +206,26 @@ p3 <- ggplot(FlavusADP,
   theme(title  = ggtext::element_markdown()) +
   scale_color_manual(values = c("deepskyblue", "cornflowerblue", "darkblue")) +
   scale_shape_manual(values = c(3, 8, 19, 3, 8, 19, 8, 19)) +
-  ggtitle(substitute(paste(bolditalic('O. flavus')))) +
+  ggtitle(NULL) +
   theme(panel.background = element_rect(fill = 'gray95')) +
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = .57, yend = .57, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("segment", x = 3, xend = 1, y = .57, yend = .57, colour = "dodgerblue2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(2), y = c(.65), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(2), y = c(.61), label = "decrease", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(.65), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(.61), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(.53), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = .55, yend = .55, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("segment", x = 3, xend = 1, y = .55, yend = .55, colour = "dodgerblue2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(2), y = c(.65), label = "Temperature", cex=6, col = "black") +
+  annotate("text", x = c(2), y = c(.59), label = "decrease", cex=6, col = "black") +
+  annotate("text", x = c(6), y = c(.65), label = "Temperature", cex=6, col = "black") +
+  annotate("text", x = c(6), y = c(.59), label = "increase", cex=6, col = "black") +
+  annotate("text", x = c(4), y = c(.53), label = "Control", cex=4, col = "black") + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
-  theme(text=element_text(size=12, family="Arial")) +
+  theme(text=element_text(size=25, family="Arial")) +
   ylim(0, .65) + 
-  theme(legend.position = c(0.86, 1.0515),
+  theme(legend.position = "None",
         legend.direction = "horizontal") +
-  theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
+  theme(plot.title = element_text(hjust = 0.01),
+        axis.title.y = element_text(vjust = +1.7)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
     axis.line = element_line(linewidth = 0.4, color="black"))
 #save plot ADP
@@ -241,25 +245,25 @@ p4 <- ggplot(AlbinusADP,
        col = "Depth, m:",
        shape = "Depth, m:",
        x = "Temperature, °C",
-       y = "ADP, µM/g wet weight",
+       y = NULL,
   ) +
   theme(title  = ggtext::element_markdown()) +
   scale_color_manual(values = c("cornflowerblue")) +
   scale_shape_manual(values = c(17)) +
-  ggtitle(substitute(paste(bolditalic('O. albinus')))) +
+  ggtitle(NULL) +
   theme(panel.background = element_rect(fill = 'gray95')) +
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
   theme(plot.title = element_text(hjust = 0.5)) + 
   ylim(0, 0.65) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = .57, yend = .57, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(6), y = c(.65), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(.61), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(.53), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = .55, yend = .55, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(6), y = c(.65), label = "Temperature", cex=6, col = "black") +
+  annotate("text", x = c(6), y = c(.59), label = "increase", cex=6, col = "black") +
+  annotate("text", x = c(4), y = c(.53), label = "Control", cex=4, col = "black") + 
   annotate("text", x = c(12), y = c(0.27), label = substitute(paste(bold("*"))), cex=10, col = "black") +
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
-  theme(text=element_text(size=12, family="Arial")) + 
-  theme(legend.position = c(0.905, 1.0515),
+  theme(text=element_text(size=25, family="Arial")) + 
+  theme(legend.position ="None",
         legend.direction = "horizontal") +
   theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
@@ -291,24 +295,25 @@ p5 <- ggplot(FlavusAMP,
   theme(title  = ggtext::element_markdown()) +
   scale_color_manual(values = c("deepskyblue", "cornflowerblue", "darkblue")) +
   scale_shape_manual(values = c(3, 8, 19, 3, 8, 19, 8, 19)) +
-  ggtitle(substitute(paste(bolditalic('O. flavus')))) +
+  ggtitle(NULL) +
   theme(panel.background = element_rect(fill = 'gray95')) +
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = .57, yend = .57, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("segment", x = 3, xend = 1, y = .57, yend = .57, colour = "dodgerblue2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(2), y = c(.65), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(2), y = c(.61), label = "decrease", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(.65), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(.61), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(.53), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = .55, yend = .55, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("segment", x = 3, xend = 1, y = .55, yend = .55, colour = "dodgerblue2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(2), y = c(.65), label = "Temperature", cex=6, col = "black") +
+  annotate("text", x = c(2), y = c(.59), label = "decrease", cex=6, col = "black") +
+  annotate("text", x = c(6), y = c(.65), label = "Temperature", cex=6, col = "black") +
+  annotate("text", x = c(6), y = c(.59), label = "increase", cex=6, col = "black") +
+  annotate("text", x = c(4), y = c(.53), label = "Control", cex=4, col = "black") + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) + 
-  theme(text=element_text(size=12, family="Arial")) +
+  theme(text=element_text(size=25, family="Arial")) +
   ylim(0, .65) + 
-  theme(legend.position = c(0.86, 1.0515),
+  theme(legend.position = "None",
         legend.direction = "horizontal") +
-  theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
+  theme(plot.title = element_text(hjust = 0.01),
+        axis.title.y = element_text(vjust = +1.7)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
     axis.line = element_line(linewidth = 0.4, color="black"))
 #save plot AMP
@@ -328,25 +333,25 @@ p6 <- ggplot(AlbinusAMP,
        col = "Depth, m:",
        shape = "Depth, m:",
        x = "Temperature, °C",
-       y = "AMP, µM/g wet weight",
+       y = NULL,
   ) +
   theme(title  = ggtext::element_markdown()) +
   scale_color_manual(values = c("cornflowerblue")) +
   scale_shape_manual(values = c(17)) +
-  ggtitle(substitute(paste(bolditalic('O. albinus')))) +
+  ggtitle(NULL) +
   theme(panel.background = element_rect(fill = 'gray95')) +
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
   theme(plot.title = element_text(hjust = 0.5)) + 
   ylim(0, 0.65) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = .57, yend = .57, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(6), y = c(.65), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(.61), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(.53), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = .55, yend = .55, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(6), y = c(.65), label = "Temperature", cex=6, col = "black") +
+  annotate("text", x = c(6), y = c(.59), label = "increase", cex=6, col = "black") +
+  annotate("text", x = c(4), y = c(.53), label = "Control", cex=4, col = "black") + 
   annotate("text", x = c(8), y = c(0.2), label = substitute(paste(bold("*"))), cex=10, col = "black") +
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) + 
-  theme(text=element_text(size=12, family="Arial")) + 
-  theme(legend.position = c(0.905, 1.0515),
+  theme(text=element_text(size=25, family="Arial")) + 
+  theme(legend.position = "None",
         legend.direction = "horizontal") +
   theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
@@ -379,24 +384,25 @@ p7 <- ggplot(FlavusAEC,
   theme(title  = ggtext::element_markdown()) +
   scale_color_manual(values = c("deepskyblue", "cornflowerblue", "darkblue")) +
   scale_shape_manual(values = c(3, 8, 19, 3, 8, 19, 8, 19)) +
-  ggtitle(substitute(paste(bolditalic('O. flavus')))) +
+  ggtitle(NULL) +
   theme(panel.background = element_rect(fill = 'gray95')) +
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = 1.36, yend = 1.36, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("segment", x = 3, xend = 1, y = 1.36, yend = 1.36, colour = "dodgerblue2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(2), y = c(1.5), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(2), y = c(1.42), label = "decrease", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(1.5), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(1.42), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(1.25), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = 1.26, yend = 1.26, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("segment", x = 3, xend = 1, y = 1.26, yend = 1.26, colour = "dodgerblue2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(2), y = c(1.5), label = "Temperature", cex=6, col = "black") +
+  annotate("text", x = c(2), y = c(1.38), label = "decrease", cex=6, col = "black") +
+  annotate("text", x = c(6), y = c(1.5), label = "Temperature", cex=6, col = "black") +
+  annotate("text", x = c(6), y = c(1.38), label = "increase", cex=6, col = "black") +
+  annotate("text", x = c(4), y = c(1.25), label = "Control", cex=4, col = "black") + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) + 
-  theme(text=element_text(size=12, family="Arial")) +
+  theme(text=element_text(size=25, family="Arial")) +
   ylim(0, 1.5) + 
-  theme(legend.position = c(0.86, 1.0515),
+  theme(legend.position = "None",
         legend.direction = "horizontal") +
-  theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
+  theme(plot.title = element_text(hjust = 0.01),
+        axis.title.y = element_text(vjust = +1.7)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
     axis.line = element_line(linewidth = 0.4, color="black"))
 #save plot AEC
@@ -416,25 +422,25 @@ p8 <- ggplot(AlbinusAEC,
        col = "Depth, m:",
        shape = "Depth, m:",
        x = "Temperature, °C",
-       y = "AEC, A.U.",
+       y = NULL,
   ) +
   theme(title  = ggtext::element_markdown()) +
   scale_color_manual(values = c("cornflowerblue")) +
   scale_shape_manual(values = c(17)) +
-  ggtitle(substitute(paste(bolditalic('O. albinus')))) +
+  ggtitle(NULL) +
   theme(panel.background = element_rect(fill = 'gray95')) +
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
   theme(plot.title = element_text(hjust = 0.5)) + 
   ylim(0, 1.5) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = 1.36, yend = 1.36, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(6), y = c(1.5), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(1.42), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(1.25), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = 1.26, yend = 1.26, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(6), y = c(1.5), label = "Temperature", cex=6, col = "black") +
+  annotate("text", x = c(6), y = c(1.38), label = "increase", cex=6, col = "black") +
+  annotate("text", x = c(4), y = c(1.25), label = "Control", cex=4, col = "black") + 
   annotate("text", x = c(8), y = c(1.1), label = substitute(paste(bold("*"))), cex=10, col = "black") +
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
-  theme(text=element_text(size=12, family="Arial")) + 
-  theme(legend.position = c(0.905, 1.0515),
+  theme(text=element_text(size=25, family="Arial")) + 
+  theme(legend.position = "none",
         legend.direction = "horizontal") +
   theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
@@ -473,21 +479,21 @@ p9 <- ggplot(FlavusGlucose,
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = 2.6, yend = 2.6, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("segment", x = 3, xend = 1, y = 2.6, yend = 2.6, colour = "dodgerblue2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(2), y = c(2.9), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(2), y = c(2.75), label = "decrease", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(2.9), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(2.75), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(2.3), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = 2.6, yend = 2.6, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("segment", x = 3, xend = 1, y = 2.6, yend = 2.6, colour = "dodgerblue2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(2), y = c(2.9), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(2), y = c(2.75), label = "decrease", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(2.9), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(2.75), label = "increase", cex=4.5, col = "black") +
+  annotate("text", x = c(4), y = c(2.3), label = "Control", cex=3, col = "black") + 
   annotate("text", x = c(13), y = c(2.6), label = substitute(paste(bold("*"))), cex=10, col = "black") + 
   annotate("text", x = c(12), y = c(2.4), label = substitute(paste(bold("*"))), cex=10, col = "black") +
   annotate("text", x = c(11), y = c(2.4), label = substitute(paste(bold("*"))), cex=10, col = "black") +
   annotate("text", x = c(10), y = c(1.4), label = substitute(paste(bold("*"))), cex=10, col = "black") +
   annotate("text", x = c(9), y = c(1.2), label = substitute(paste(bold("*"))), cex=10, col = "black") +
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) + 
-  theme(text=element_text(size=12, family="Arial")) +
-  theme(legend.position = c(0.816, 1.0515),
+  theme(text=element_text(size=18, family="Arial")) +
+  theme(legend.position = c(0.7, 1.0515),
         legend.direction = "horizontal") +
   theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
@@ -511,7 +517,7 @@ p10 <- ggplot(AlbinusGlucose,
        col = "Depth, m:",
        shape = "Depth, m:",
        x = "Temperature, °C",
-       y = "Glucose, µM/g wet weight",
+       y = NULL,
   ) +
   theme(title  = ggtext::element_markdown()) +
   scale_color_manual(values = c("cornflowerblue")) +
@@ -521,16 +527,16 @@ p10 <- ggplot(AlbinusGlucose,
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = 2.6, yend = 2.6, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(6), y = c(2.9), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(2.75), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(2.3), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = 2.6, yend = 2.6, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(6), y = c(2.9), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(2.75), label = "increase", cex=4.5, col = "black") +
+  annotate("text", x = c(4), y = c(2.3), label = "Control", cex=3, col = "black") + 
   annotate("text", x = c(13), y = c(2.9), label = substitute(paste(bold("*"))), cex=10, col = "black") + 
   annotate("text", x = c(12), y = c(2.8), label = substitute(paste(bold("*"))), cex=10, col = "black") +
   annotate("text", x = c(11), y = c(2.5), label = substitute(paste(bold("*"))), cex=10, col = "black") +
   annotate("text", x = c(10), y = c(2.2), label = substitute(paste(bold("*"))), cex=10, col = "black") +
-  theme(text=element_text(size=12, family="Arial")) + 
-  theme(legend.position = c(0.905, 1.0515),
+  theme(text=element_text(size=18, family="Arial")) + 
+  theme(legend.position = c(0.83, 1.0515),
         legend.direction = "horizontal") +
   theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
@@ -562,21 +568,21 @@ p11 <- ggplot(FlavusGlycogen,
   ) +
   scale_color_manual(values = c("deepskyblue", "cornflowerblue", "darkblue")) +
   scale_shape_manual(values = c(3, 8, 19, 3, 8, 19, 8, 19)) +
-  ggtitle(substitute(paste(bolditalic('O. flavus')))) +
+  ggtitle(NULL) +
   theme(panel.background = element_rect(fill = 'gray95')) +
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = 36, yend = 36, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("segment", x = 3, xend = 1, y = 36, yend = 36, colour = "dodgerblue2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(2), y = c(39.5), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(2), y = c(37.5), label = "decrease", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(39.5), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(37.5), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(35), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = 36, yend = 36, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("segment", x = 3, xend = 1, y = 36, yend = 36, colour = "dodgerblue2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(2), y = c(39.5), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(2), y = c(37.5), label = "decrease", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(39.5), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(37.5), label = "increase", cex=4.5, col = "black") +
+  annotate("text", x = c(4), y = c(35), label = "Control", cex=3, col = "black") + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
-  theme(text=element_text(size=12, family="Arial")) +
-  theme(legend.position = c(0.816, 1.0515),
+  theme(text=element_text(size=18, family="Arial")) +
+  theme(legend.position = "none",
         legend.direction = "horizontal") +
   theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
@@ -600,23 +606,23 @@ p12 <- ggplot(AlbinusGlycogen,
        col = "Depth, m:",
        shape = "Depth, m:",
        x = "Temperature, °C",
-       y = "Glycogen, µM/g wet weight",
+       y = NULL,
   ) +
   theme(title  = ggtext::element_markdown()) +
   scale_color_manual(values = c("cornflowerblue")) +
   scale_shape_manual(values = c(17)) +
-  ggtitle(substitute(paste(bolditalic('O. albinus')))) +
+  ggtitle(NULL) +
   theme(panel.background = element_rect(fill = 'gray95')) +
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = 36, yend = 36, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(6), y = c(39.5), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(37.5), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(35), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = 36, yend = 36, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(6), y = c(39.5), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(37.5), label = "increase", cex=4.5, col = "black") +
+  annotate("text", x = c(4), y = c(35), label = "Control", cex=3, col = "black") + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
-  theme(text=element_text(size=12, family="Arial")) + 
-  theme(legend.position = c(0.905, 1.0515),
+  theme(text=element_text(size=18, family="Arial")) + 
+  theme(legend.position ="none",
         legend.direction = "horizontal") +
   theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
@@ -655,17 +661,17 @@ p13 <- ggplot(FlavusPOD,
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = .221, yend = .221, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("segment", x = 3, xend = 1, y = .221, yend = .221, colour = "dodgerblue2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(2), y = c(.25), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(2), y = c(.235), label = "decrease", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(.25), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(.235), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(0.2), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = .22, yend = .22, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("segment", x = 3, xend = 1, y = .22, yend = .22, colour = "dodgerblue2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(2), y = c(.25), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(2), y = c(.235), label = "decrease", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(.25), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(.235), label = "increase", cex=4.5, col = "black") +
+  annotate("text", x = c(4), y = c(0.2), label = "Control", cex=3, col = "black") + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
-  theme(text=element_text(size=12, family="Arial")) +
-  theme(legend.position = c(0.816, 1.0515),
+  theme(text=element_text(size=18, family="Arial")) +
+  theme(legend.position = c(0.72, 1.0515),
         legend.direction = "horizontal") +
   theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
@@ -690,7 +696,7 @@ p14 <- ggplot(AlbinusPOD,
        col = "Depth, m:",
        shape = "Depth, m:",
        x = "Temperature, °C",
-       y = "POD, nkat/mg protein",
+       y = NULL,
   ) +
   theme(title  = ggtext::element_markdown()) +
   scale_color_manual(values = c("cornflowerblue", "darkblue")) +
@@ -700,17 +706,17 @@ p14 <- ggplot(AlbinusPOD,
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = .221, yend = .221, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("segment", x = 3, xend = 1, y = .221, yend = .221, colour = "dodgerblue2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(2), y = c(.25), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(2), y = c(.235), label = "decrease", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(.25), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(.235), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(0.2), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = .22, yend = .22, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("segment", x = 3, xend = 1, y = .22, yend = .22, colour = "dodgerblue2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(2), y = c(.25), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(2), y = c(.235), label = "decrease", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(.25), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(.235), label = "increase", cex=4.5, col = "black") +
+  annotate("text", x = c(4), y = c(0.2), label = "Control", cex=3, col = "black") + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
-  theme(text=element_text(size=12, family="Arial")) +
-  theme(legend.position = c(0.857, 1.0515),
+  theme(text=element_text(size=18, family="Arial")) +
+  theme(legend.position = c(0.78, 1.0515),
         legend.direction = "horizontal") +
   theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
@@ -732,7 +738,7 @@ FlavusCATcoluor <- c("darkorange", "darkorange", "darkorange", "gray40", "darkor
                      "darkorange")
 p15 <- ggplot(FlavusCAT, 
        aes(x = Temperature, y = Value, ymin = 0)) +
-  geom_boxplot(outlier.alpha = 0, alpha = 0.5, fill = FlavusPODcoluor, width = 0.6) +  
+  geom_boxplot(outlier.alpha = 0, alpha = 0.5, fill = FlavusCATcoluor, width = 0.6) +  
   geom_point(size = 2, alpha = 1, aes(group = Temperature, col = Depth, shape = Depth), 
              position = position_jitterdodge(jitter.width = 0.5)) +
   labs(fill = "Температура",
@@ -744,22 +750,22 @@ p15 <- ggplot(FlavusCAT,
   theme(title  = ggtext::element_markdown()) +
   scale_color_manual(values = c("deepskyblue", "cornflowerblue", "darkblue")) +
   scale_shape_manual(values = c(3, 8, 19, 3, 8, 19, 8, 19)) +
-  ggtitle(substitute(paste(bolditalic('O. flavus')))) +
+  ggtitle(NULL) +
   theme(panel.background = element_rect(fill = 'gray95')) +
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = 1750, yend = 1750, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("segment", x = 3, xend = 1, y = 1750, yend = 1750, colour = "dodgerblue2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(2), y = c(1975), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(2), y = c(1830), label = "decrease", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(1975), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(1830), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(1650), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = 1720, yend = 1720, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("segment", x = 3, xend = 1, y = 1720, yend = 1720, colour = "dodgerblue2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(2), y = c(1975), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(2), y = c(1850), label = "decrease", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(1975), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(1850), label = "increase", cex=4.5, col = "black") +
+  annotate("text", x = c(4), y = c(1650), label = "Control", cex=3, col = "black") + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
-  theme(text=element_text(size=12, family="Arial")) +
-  theme(legend.position = c(0.816, 1.0515),
+  theme(text=element_text(size=18, family="Arial")) +
+  theme(legend.position = "none",
         legend.direction = "horizontal") +
   theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
@@ -775,34 +781,34 @@ AlbinusCATcoluor <- c("floralwhite", "floralwhite", "floralwhite", "gray40", "fl
                       "floralwhite")
 p16 <- ggplot(AlbinusCAT, 
        aes(x = Temperature, y = Value, ymin = 0)) +
-  geom_boxplot(outlier.alpha = 0, alpha = 0.5, fill = AlbinusPODcoluor, width = 0.6) +  
+  geom_boxplot(outlier.alpha = 0, alpha = 0.5, fill = AlbinusCATcoluor, width = 0.6) +  
   geom_point(size = 2, alpha = 1, aes(group = Temperature, col = Depth, shape = Depth), 
              position = position_jitterdodge(jitter.width = 0.5)) +
   labs(fill = "Температура",
        col = "Depth, m:",
        shape = "Depth, m:",
        x = "Temperature, °C",
-       y = "CAT, nkat/mg protein",
+       y = NULL,
   ) +
   theme(title  = ggtext::element_markdown()) +
   scale_color_manual(values = c("cornflowerblue", "darkblue")) +
   scale_shape_manual(values = c(17, 19)) +
-  ggtitle(substitute(paste(bolditalic('O. albinus')))) +
+  ggtitle(NULL) +
   theme(panel.background = element_rect(fill = 'gray95')) +
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = 1750, yend = 1750, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("segment", x = 3, xend = 1, y = 1750, yend = 1750, colour = "dodgerblue2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(2), y = c(1975), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(2), y = c(1830), label = "decrease", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(1975), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(1830), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(1650), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = 1720, yend = 1720, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("segment", x = 3, xend = 1, y = 1720, yend = 1720, colour = "dodgerblue2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(2), y = c(1975), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(2), y = c(1850), label = "decrease", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(1975), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(1850), label = "increase", cex=4.5, col = "black") +
+  annotate("text", x = c(4), y = c(1650), label = "Control", cex=3, col = "black") + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
-  theme(text=element_text(size=12, family="Arial")) +
-  theme(legend.position = c(0.857, 1.0515),
+  theme(text=element_text(size=18, family="Arial")) +
+  theme(legend.position = "none",
         legend.direction = "horizontal") +
   theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
@@ -811,7 +817,7 @@ p16 <- ggplot(AlbinusCAT,
 ggsave("2023-12-20_CAT albinus.png", width = 20, height = 11, units = "cm", dpi = 600)
 
 p15/p16
-ggsave("2_p_2023-12-20_CAT albinus и flavus.png", width = 20, height = 22, units = "cm", dpi = 600)
+ggsave("2_p_2023-12-20_CAT albinus и flavus_test.png", width = 20, height = 22, units = "cm", dpi = 600)
 
 
 #plot for GST O. flavus
@@ -838,17 +844,17 @@ p17 <- ggplot(FlavusGST,
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = 29, yend = 29, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("segment", x = 3, xend = 1, y = 29, yend = 29, colour = "dodgerblue2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(2), y = c(33), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(2), y = c(31), label = "decrease", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(33), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(31), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(27), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = 29, yend = 29, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("segment", x = 3, xend = 1, y = 29, yend = 29, colour = "dodgerblue2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(2), y = c(33), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(2), y = c(31), label = "decrease", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(33), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(31), label = "increase", cex=4.5, col = "black") +
+  annotate("text", x = c(4), y = c(27), label = "Control", cex=3, col = "black") + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
-  theme(text=element_text(size=12, family="Arial")) +
-  theme(legend.position = c(0.816, 1.0515),
+  theme(text=element_text(size=18, family="Arial")) +
+  theme(legend.position = c(0.72, 1.0515),
         legend.direction = "horizontal") +
   theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
@@ -872,7 +878,7 @@ p18 <- ggplot(AlbinusGST,
        col = "Depth, m:",
        shape = "Depth, m:",
        x = "Temperature, °C",
-       y = "GST, nkat/mg protein",
+       y = NULL,
   ) +
   theme(title  = ggtext::element_markdown()) +
   scale_color_manual(values = c("cornflowerblue", "darkblue")) +
@@ -882,20 +888,20 @@ p18 <- ggplot(AlbinusGST,
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = 29, yend = 29, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("segment", x = 3, xend = 1, y = 29, yend = 29, colour = "dodgerblue2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(2), y = c(33), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(2), y = c(31), label = "decrease", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(33), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(31), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(27), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = 29, yend = 29, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("segment", x = 3, xend = 1, y = 29, yend = 29, colour = "dodgerblue2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(2), y = c(33), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(2), y = c(31), label = "decrease", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(33), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(31), label = "increase", cex=4.5, col = "black") +
+  annotate("text", x = c(4), y = c(27), label = "Control", cex=3, col = "black") + 
   annotate("text", x = c(1), y = c(20), label = substitute(paste(bold("*"))), cex=10, col = "black") +
   annotate("text", x = c(2), y = c(20), label = substitute(paste(bold("*"))), cex=10, col = "black") +
   annotate("text", x = c(11), y = c(18), label = substitute(paste(bold("*"))), cex=10, col = "black") +
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
-  theme(text=element_text(size=12, family="Arial")) +
-  theme(legend.position = c(0.816, 1.0515),
+  theme(text=element_text(size=18, family="Arial")) +
+  theme(legend.position = c(0.78, 1.0515),
         legend.direction = "horizontal") +
   theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
@@ -908,7 +914,7 @@ p17/p18
 
 ggsave("2_p_2023-12-20_GST albinus and flavus.png", width = 20, height = 22, units = "cm", dpi = 600)
 
-#plot for GST O. flavus
+#plot for LDH O. flavus
 FlavusLDH[,3] <- factor(FlavusLDH[,3], levels=unique(FlavusLDH[,3]))
 FlavusLDHcoluor <- c("darkorange", "darkorange", "darkorange", "gray40", "darkorange", "darkorange",
                      "darkorange", "darkorange", "darkorange", "darkorange", "darkorange", "darkorange",
@@ -922,27 +928,27 @@ p19 <- ggplot(FlavusLDH,
        col = "Depth, m:",
        shape = "Depth, m:",
        x = "Temperature, °C",
-       y = "LDG, nkat/mg protein",
+       y = "LDH, nkat/mg protein",
   ) +
   theme(title  = ggtext::element_markdown()) +
   scale_color_manual(values = c("deepskyblue", "cornflowerblue", "darkblue")) +
   scale_shape_manual(values = c(3, 8, 19, 3, 8, 19, 8, 19)) +
-  ggtitle(substitute(paste(bolditalic('O. flavus')))) +
+  ggtitle(NULL) +
   theme(panel.background = element_rect(fill = 'gray95')) +
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = 1000, yend = 1000, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("segment", x = 3, xend = 1, y = 1000, yend = 1000, colour = "dodgerblue2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(2), y = c(1125), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(2), y = c(1050), label = "decrease", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(1125), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(1050), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(950), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = 1070, yend = 1070, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("segment", x = 3, xend = 1, y = 1070, yend = 1070, colour = "dodgerblue2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(2), y = c(1225), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(2), y = c(1140), label = "decrease", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(1225), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(1140), label = "increase", cex=4.5, col = "black") +
+  annotate("text", x = c(4), y = c(950), label = "Control", cex=3, col = "black") + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
-  theme(text=element_text(size=12, family="Arial")) +
-  theme(legend.position = c(0.816, 1.0515),
+  theme(text=element_text(size=18, family="Arial")) +
+  theme(legend.position = "none",
         legend.direction = "horizontal") +
   theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
@@ -966,36 +972,47 @@ p20 <- ggplot(AlbinusLDH,
        col = "Depth, m:",
        shape = "Depth, m:",
        x = "Temperature, °C",
-       y = "LDG, nkat/mg protein",
+       y = NULL,
   ) +
   theme(title  = ggtext::element_markdown()) +
   scale_color_manual(values = c("cornflowerblue", "darkblue")) +
   scale_shape_manual(values = c(17, 19)) +
-  ggtitle(substitute(paste(bolditalic('O. albinus')))) +
+  ggtitle(NULL) +
   theme(panel.background = element_rect(fill = 'gray95')) +
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
   theme(plot.title = element_text(hjust = 0.5)) +
   geom_vline(xintercept=c(3.5,4.5), linetype = "dashed", linewidth = 0.6) +
-  annotate("segment", x = 5, xend = 7, y = 1000, yend = 1000, colour = "firebrick2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("segment", x = 3, xend = 1, y = 1000, yend = 1000, colour = "dodgerblue2", size=0.8, arrow=arrow(length = unit(0.2, "cm"))) +
-  annotate("text", x = c(2), y = c(1125), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(2), y = c(1050), label = "decrease", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(1125), label = "Temperature", cex=4, col = "black") +
-  annotate("text", x = c(6), y = c(1050), label = "increase", cex=4, col = "black") +
-  annotate("text", x = c(4), y = c(950), label = "Control", cex=2.7, col = "black") + 
+  annotate("segment", x = 5, xend = 7, y = 1070, yend = 1070, colour = "firebrick2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("segment", x = 3, xend = 1, y = 1070, yend = 1070, colour = "dodgerblue2", size=1.2, arrow=arrow(length = unit(0.2, "cm"))) +
+  annotate("text", x = c(2), y = c(1225), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(2), y = c(1140), label = "decrease", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(1225), label = "Temperature", cex=4.5, col = "black") +
+  annotate("text", x = c(6), y = c(1140), label = "increase", cex=4.5, col = "black") +
+  annotate("text", x = c(4), y = c(950), label = "Control", cex=3, col = "black") + 
   annotate("text", x = c(7), y = c(220), label = substitute(paste(bold("*"))), cex=10, col = "black") +
   annotate("text", x = c(10), y = c(220 ), label = substitute(paste(bold("*"))), cex=10, col = "black") +
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) + 
   theme(text=element_text(color="black"),axis.text=element_text(color="black")) +
-  theme(text=element_text(size=12, family="Arial")) +
-  theme(legend.position = c(0.816, 1.0515),
+  theme(text=element_text(size=18, family="Arial")) +
+  theme(legend.position = "none",
         legend.direction = "horizontal") +
   theme(plot.title = element_text(hjust = 0.01)) + theme(legend.background=element_rect(fill = alpha("white", 0))) + 
   theme(
     axis.line = element_line(linewidth = 0.4, color="black")) +
   ylim(0, 1250)
 #save plot LDH
-ggsave("2023-12-20_LDH albinus.png", width = 20, height = 11, units = "cm", dpi = 600)
+#adenilats
+p20
+(p1 + p2) / (p3 + p4) / (p5 + p6) / (p7 + p8)
+ggsave("allmethabolits_fla_alb.png", width = 50, height = 46, units = "cm", dpi = 600)
+#
+(p9 + p10) / (p11 + p12)
+ggsave("allmethabolits2_fla_alb.png", width = 33, height = 25, units = "cm", dpi = 600)
+p16
 
-p19/p20
-ggsave("2_p_2023-12-20_LDH albinus and flavus.png", width = 20, height = 22, units = "cm", dpi = 600)
+(p13 + p14) / (p15 + p16) 
+ggsave("CAT_POD.png", width = 36, height = 25, units = "cm", dpi = 600)
+
+
+(p17 + p18) / (p19 + p20)
+ggsave("GST_LDH.png", width = 36, height = 25, units = "cm", dpi = 600)
