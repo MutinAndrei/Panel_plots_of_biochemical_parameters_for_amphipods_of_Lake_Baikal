@@ -1005,14 +1005,12 @@ p20 <- ggplot(AlbinusLDH,
 p20
 (p1 + p2) / (p3 + p4) / (p5 + p6) / (p7 + p8)
 ggsave("allmethabolits_fla_alb.png", width = 50, height = 46, units = "cm", dpi = 600)
-#
+#Glu_gly
 (p9 + p10) / (p11 + p12)
 ggsave("allmethabolits2_fla_alb.png", width = 33, height = 25, units = "cm", dpi = 600)
-p16
-
+#CAT_POD
 (p13 + p14) / (p15 + p16) 
 ggsave("CAT_POD.png", width = 36, height = 25, units = "cm", dpi = 600)
-
-
+#GST_LDH
 (p17 + p18) / (p19 + p20)
 ggsave("GST_LDH.png", width = 36, height = 25, units = "cm", dpi = 600)
