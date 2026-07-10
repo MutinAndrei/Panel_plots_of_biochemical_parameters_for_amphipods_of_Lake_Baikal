@@ -16,4 +16,3 @@ bbduk.sh -Xmx1G in=reads_1.fq.gz in2=reads_1.fq.gz out=reads_1_trim.fq.gz out2=\
 ```
 
 Продолжение вашей обычной документации...
-
